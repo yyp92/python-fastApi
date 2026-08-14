@@ -1,0 +1,14 @@
+# 框架核心
+fastapi>=0.112.0
+uvicorn[standard]>=0.23.2
+
+# 数据校验、类型解析（Pydantic v2）
+pydantic>=2.0
+pydantic-settings  # 读取.env环境变量
+
+# 请求体文件上传、表单解析
+python-multipart
+
+# 加载项目根目录 .env 配置文件
+python-dotenv
+
