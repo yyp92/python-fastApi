@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p>用户名：{{username | upper}}</p>
+    <p>年龄：{{age}}</p>
+    <p>四大名著：{{books}}</p>
+    <!-- <p>第一本：{{books.0}}</p> -->
+
+    <p>个人信息：{{person.name}}，{{person.age}}，{{person.gender}}</p>
+
+    <p>pi：{{pi | round(3)}}</p>
+
+    <p>影视区</p>
+    {% if age > 18 %}
+        <ul>
+            {% for movie in movies.chengnianren %}
+                <li>{{movie}}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <ul>
+            {% for movie in movies.qingshaonian %}
+                <li>{{movie}}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <hr />
+
+    <ul>
+        {% for book in books %}
+            {% if book.price > 200 %}
+                <li>{{book.title}}</li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+</body>
+</html>

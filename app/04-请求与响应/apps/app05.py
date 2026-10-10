@@ -28,6 +28,7 @@ async def get_uploadFile(file: UploadFile = File(...)):
 
     # __file__ 代表当前app05.py文件的完整路径
     save_dir = os.path.join(os.path.dirname(__file__), "../imgs")
+    # 拼接完整保存文件路径：imgs 文件夹 + 上传的原文件名
     path = os.path.join(save_dir, file.filename)
     # 规范化路径，消除 ..
     save_dir = os.path.abspath(save_dir)
