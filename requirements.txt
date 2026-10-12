@@ -12,3 +12,9 @@ python-multipart
 # 加载项目根目录 .env 配置文件
 python-dotenv
 
+# orm 框架
+tortoise-orm>=1.1.8
+# 异步 mysql 数据库驱动
+asyncmy>=0.2.16
+# orm 迁移工具，结合 tortoise-orm 使用
+aerich>=0.10.1

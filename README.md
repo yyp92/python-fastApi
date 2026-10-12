@@ -41,6 +41,67 @@ which python
 docker compose up -d
 ```
 
+## 数据库迁移
+aerich 是一个基于 tortoise 的数据库迁移工具。
+
+### 初始化配置，只需要使用一次
+```bash
+# TORTOISE_ORM 配置的位置
+# 因为 vscode 编辑器的原因, 搭建的虚拟环境的限制
+# aerich init -t settings.TORTOISE_ORM
+
+# 进入到工作的目录，采用以下的命令
+/Users/yyp92/Desktop/code/project/python-fastApi/.venv/bin/aerich init -t settings.TORTOISE_ORM
+```
+
+> 初始化完会在当前的目录生成一个文件 `pyproject.toml` 和 一个文件夹 `migrations` 
+> - `pyproject.toml` 保存配置文件路径，低版本可能是 `aerich.ini`。
+> - `migrations` 存放迁移文件。
+
+
+### 初始化数据库，一般情况下只用一次
+```bash
+# 进入到工作的目录，采用以下的命令
+/Users/yyp92/Desktop/code/project/python-fastApi/.venv/bin/aerich init-db
+```
+
+> 此时数据库中就有相应的表格。
+> 如果 `TORTOISE_ORM` 配置文件中的 `models` 改了名，则执行这条命令时需要增加 `--app` 参数，来指定你修改的名字。
+
+
+### 更新模型并进行迁移
+```bash
+# 进入到工作的目录，采用以下的命令
+# --name 可以指定迁移的名称，默认是当前时间戳
+/Users/yyp92/Desktop/code/project/python-fastApi/.venv/bin/aerich migrate [--name]
+```
+
+> 注意：此时 sql 并没有执行，数据库中表中没有xxx字段。
+
+
+### 重新执行迁移，写入数据库
+```bash
+# 进入到工作的目录，采用以下的命令
+/Users/yyp92/Desktop/code/project/python-fastApi/.venv/bin/aerich upgrade
+```
+
+
+### 回到上一个版本
+```bash
+# 进入到工作的目录，采用以下的命令
+/Users/yyp92/Desktop/code/project/python-fastApi/.venv/bin/aerich downgrade
+```
+
+
+### 查看历史迁移记录
+```bash
+# 进入到工作的目录，采用以下的命令
+/Users/yyp92/Desktop/code/project/python-fastApi/.venv/bin/aerich history
+```
+
+
+
+
 
 
 ## 遇到的问题
@@ -48,7 +109,10 @@ docker compose up -d
 在项目的根目录配饰 .vscode/settings.json 文件。
 ```json
 {
-    "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python"
+    "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
+    "code-runner.executorMap" : {
+        "python" : "/Users/yyp92/Desktop/code/project/python-fastApi/.venv/bin/python -u"
+    }
 }
 ```
 
@@ -121,3 +185,26 @@ fastapi_demo/
 | dev 本地开发 | 本机 .venv | 仅启动 MySQL、Redis 等中间件 |
 | test 测试服务器 | Docker 容器 | 完整集群：api + mysql + redis |
 | prod 正式服务器 | Docker 容器 | 完整集群：api + mysql + redis |
+
+
+
+
+## python 其他知识点
+### Python 字符串前缀：`f` / `r` / `u` / `b`
+| 前缀   | 名称                 | 作用                                                         |
+| ------ | -------------------- | ------------------------------------------------------------ |
+| `f""`  | 格式化字符串         | 解析 `{变量/表达式}`，做字符串插值                           |
+| `r""`  | 原始 (raw) 字符串    | 关闭反斜杠`\`转义，`\`当作普通字符（正则、文件路径高频）     |
+| `u""`  | Unicode 字符串       | 字面量是 unicode 文本，Python3 默认全部字符串就是 u 类型，几乎不用手写 |
+| `b""`  | bytes 字节串         | 二进制字节，网络、数据库、socket 传输用，不是普通文本         |
+
+
+### `*` 和 `**` 完整区别
+|符号|使用位置|作用|接收/产出类型|
+|---|---|---|---|
+|`*`|**调用函数** `func(*seq)`|把列表/元组拆开，作为多个位置参数传入|序列 → 多个位置参数|
+|`**`|**调用函数** `func(**dict)`|把字典拆开，作为多个关键字参数传入|字典 → 多个key=value参数|
+|`*args`|**定义函数** `def fn(*args)`|收集全部多余位置参数，打包成元组|多个位置参数 → tuple元组|
+|`**kwargs`|**定义函数** `def fn(**kwargs)`|收集全部多余关键字参数，打包成字典|多个key=value参数 → dict字典|
+
+
