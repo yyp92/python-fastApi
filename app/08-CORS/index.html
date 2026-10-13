@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+</head>
+<body>
+    <p>发送请求</p>
+
+    <script>
+        $("p").click(function () {
+            $.ajax({
+                url: "http://127.0.0.1:8080/user",
+                method: "GET",
+                success: function (res) {
+                    console.log(res)
+                }
+            })
+        })
+    </script>
+</body>
+</html>
