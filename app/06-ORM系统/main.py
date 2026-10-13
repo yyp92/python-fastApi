@@ -1,4 +1,3 @@
-# 请求体数据
 from fastapi import FastAPI
 import uvicorn
 from tortoise.contrib.fastapi import register_tortoise
