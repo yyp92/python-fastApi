@@ -11,7 +11,7 @@ import re
 student_api = APIRouter()
 
 @student_api.get("/")
-async def getAllStudent():
+async def get_all_student():
     # 1. 查询所有 all 方法 ，返回 QuerySet 对象
     # students = await Student.all()
     # print("students:", students)
@@ -78,7 +78,7 @@ class StudentIn(BaseModel):
         return value
 
 @student_api.post("/")
-async def addStudent(studentIn: StudentIn):
+async def add_student(studentIn: StudentIn):
     # 插入到数据库
 
     # 方式 1
@@ -110,7 +110,7 @@ async def addStudent(studentIn: StudentIn):
 
 
 @student_api.get("/{studentId}")
-async def getOneStudent(studentId: int):
+async def get_one_student(studentId: int):
     student = await Student.get(id = studentId)
 
     return {
@@ -121,7 +121,7 @@ async def getOneStudent(studentId: int):
 
 
 @student_api.put("/{studentId}")
-async def updateStudent(studentId: int, studentIn: StudentIn):
+async def update_student(studentId: int, studentIn: StudentIn):
     newData = studentIn.model_dump()
     # newData 删除 courses 字段
     courses = newData.pop("courses")
@@ -139,7 +139,7 @@ async def updateStudent(studentId: int, studentIn: StudentIn):
 
 
 @student_api.delete("/{studentId}")
-async def deleteStudent(studentId: int):
+async def delete_student(studentId: int):
     deleteCount = await Student.filter(id = studentId).delete()
 
     if not deleteCount:
@@ -151,7 +151,7 @@ async def deleteStudent(studentId: int):
 
 
 @student_api.get("/html/index.html")
-async def getStudentHtml(request: Request):
+async def get_student_html(request: Request):
     base_dir = os.path.dirname(__file__)
     templates = Jinja2Templates(directory=os.path.join(base_dir, "../", "templates"))
 
